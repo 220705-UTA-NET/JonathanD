@@ -1,5 +1,9 @@
 ﻿
 using System;
+using System.Text;
+using System.Net;
+using System.IO;
+using System;
 
 
 namespace ProjectZero{
@@ -11,11 +15,11 @@ namespace ProjectZero{
             Console.WriteLine("Running...");
 
             char choice = ' '; //storing user input
-            Boolean exitChosen = false;
+            Boolean keepRunning = true;
 
-            //while (!exitChosen){
+            do{ //do-while to print menu
                 
-                Console.Clear();
+                //Console.Clear();
 
                 Console.WriteLine("Hello, welcome to your console newsletter.");
                 Console.WriteLine("Please select from the following options.");
@@ -25,27 +29,36 @@ namespace ProjectZero{
                 Console.WriteLine("Press X to exit the program.");
 
                 choice = Generic.getChar();
-
+                choice = char.ToUpper(choice);
                 //choice = Menu.printMenu();
-                char.ToUpper(choice); //making choice uppercase always
 
                 switch(choice){
 
                     case '1':
+
+                        
+                        using (var client = new HttpClient())
+                        {
+                            var endpoint = new Uri("https://newsapi.org/v2/everything?q=bitcoin&apiKey=6d4a7b4f281c43fbb67e55013a379776");
+                            var result = client.GetAsync(endpoint).Result;
+                            var json = result.Content.ReadAsStringAsync().Result;
+                            Console.WriteLine(json);
+                        }
+                        
                         break;
                     case '2':
                         break;
                     case '3':
                         break;
                     case 'X':
-                        exitChosen = true;//exits program if X is chosen
+                        keepRunning = false;//exits program if X is chosen
                         break;
                     default:
 
                         break;
 
                 }//end switch
-           // }
+            } while (keepRunning);
 
 
 
