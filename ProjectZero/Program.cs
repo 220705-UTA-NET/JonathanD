@@ -1,7 +1,8 @@
 ﻿
-using System;
+using System.Web;
 using System.Text;
 using System.Net;
+using System.Net.Http;
 using System.IO;
 using System;
 
@@ -10,12 +11,19 @@ namespace ProjectZero{
 
     class Program{
 
-        static void Main(string[] args)
+        static async Task Main(string[] args) //To use Async methods main MUST be asnyc and return a Task
         {   
-            Console.WriteLine("Running...");
+            DotNetEnv.Env.Load(); //Loading env file
+            var key = Environment.GetEnvironmentVariable("SECRET_KEY");//loading key
+
+            StringBuilder sb = new StringBuilder("https://newsapi.org/v2/"); //base for all my URIs 
+            
+            var client = new HttpClient(); //creating HttpClient
+            //adding User-Agent to header for all requests, API doesn't allow anonymous requests
+            client.DefaultRequestHeaders.Add("User-Agent", "ProjectZero 0.08");
 
             char choice = ' '; //storing user input
-            Boolean keepRunning = true;
+            Boolean keepRunning = true;// value used to exit do-while
 
             do{ //do-while to print menu
                 
@@ -34,17 +42,21 @@ namespace ProjectZero{
 
                 switch(choice){
 
-                    case '1':
+                    case '1': // GET top US Headlines
+                        var response = new HttpResponseMessage();
+                        
+                        sb.Append($"top-headlines?country=us&apiKey={key}");//appending sb to hit correct endpoint for this request
+                        var uri = new Uri(sb.ToString());
 
-                        
-                        using (var client = new HttpClient())
-                        {
-                            var endpoint = new Uri("https://newsapi.org/v2/everything?q=bitcoin&apiKey=6d4a7b4f281c43fbb67e55013a379776");
-                            var result = client.GetAsync(endpoint).Result;
-                            var json = result.Content.ReadAsStringAsync().Result;
-                            Console.WriteLine(json);
+                        response = await client.GetAsync(uri);
+
+                        List<string> headlines = new List<string>{};
+                        headlines.Add(await response.Content.ReadAsStringAsync());
+
+                        foreach (string headline in headlines){
+                            Console.WriteLine(headline);
                         }
-                        
+
                         break;
                     case '2':
                         break;
