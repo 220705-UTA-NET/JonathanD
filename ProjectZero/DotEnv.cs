@@ -1,3 +1,7 @@
+//Boilerplate code needed to use .env files with C# to hide my API key
+//because C# doesn't support .env natively the way JS or Python do 🙃
+
+
 namespace ProjectZero
 {
     using System;

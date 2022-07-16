@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.IO;
 using System;
+using NewsAPI;
 
 
 namespace ProjectZero{
@@ -16,11 +17,11 @@ namespace ProjectZero{
             DotNetEnv.Env.Load(); //Loading env file
             var key = Environment.GetEnvironmentVariable("SECRET_KEY");//loading key
 
-            StringBuilder sb = new StringBuilder("https://newsapi.org/v2/"); //base for all my URIs 
+            // StringBuilder sb = new StringBuilder("https://newsapi.org/v2/"); //base for all my URIs 
             
-            var client = new HttpClient(); //creating HttpClient
-            //adding User-Agent to header for all requests, API doesn't allow anonymous requests
-            client.DefaultRequestHeaders.Add("User-Agent", "ProjectZero 0.08");
+            // var client = new HttpClient(); //creating HttpClient
+            // //adding User-Agent to header for all requests, API doesn't allow anonymous requests
+            // client.DefaultRequestHeaders.Add("User-Agent", "ProjectZero 0.08");
 
             char choice = ' '; //storing user input
             Boolean keepRunning = true;// value used to exit do-while
@@ -43,19 +44,19 @@ namespace ProjectZero{
                 switch(choice){
 
                     case '1': // GET top US Headlines
-                        var response = new HttpResponseMessage();
+                        // var response = new HttpResponseMessage();
                         
-                        sb.Append($"top-headlines?country=us&apiKey={key}");//appending sb to hit correct endpoint for this request
-                        var uri = new Uri(sb.ToString());
+                        // sb.Append($"top-headlines?country=us&apiKey={key}");//appending sb to hit correct endpoint for this request
+                        // var uri = new Uri(sb.ToString());
 
-                        response = await client.GetAsync(uri);
+                        // response = await client.GetAsync(uri);
 
-                        List<string> headlines = new List<string>{};
-                        headlines.Add(await response.Content.ReadAsStringAsync());
+                        // List<string> headlines = new List<string>{};
+                        // headlines.Add(await response.Content.ReadAsStringAsync());
 
-                        foreach (string headline in headlines){
-                            Console.WriteLine(headline);
-                        }
+                        // foreach (string headline in headlines){
+                        //     Console.WriteLine(headline);
+                        // }
 
                         break;
                     case '2':
