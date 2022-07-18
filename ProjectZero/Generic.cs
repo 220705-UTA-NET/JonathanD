@@ -35,7 +35,7 @@ namespace ProjectZero{
         public static Boolean checkChoice(char choice){
             Boolean valid = false;
 
-            char[] options = {'1', '2', '3', 'X'};
+            char[] options = {'1', '2', '3', '4','X'};
 
             foreach(char element in options){
                 if(choice == element){

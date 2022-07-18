@@ -7,6 +7,7 @@ namespace ProjectZero{
         static void Main(string[] args) 
         {   
             DotNetEnv.Env.Load(); //Loading env file
+            NewsDriver nd = new NewsDriver();
 
             var key = Environment.GetEnvironmentVariable("SECRET_KEY");//loading key
             
@@ -26,7 +27,7 @@ namespace ProjectZero{
                         NewsDriver.searchNews((string) key);
                         break;
                     case '3':
-                        
+                        nd.detailedSearch();
                         break;
                     case '4':
 

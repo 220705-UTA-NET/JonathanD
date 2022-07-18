@@ -1,10 +1,25 @@
 using NewsAPI;
 using NewsAPI.Models;
 using NewsAPI.Constants;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Collections;
+using Newtonsoft.Json;
+
 
 namespace ProjectZero{
 
     class NewsDriver{ 
+
+        public NewsDriver(){
+            
+        }
+
+        private string apikey = Environment.GetEnvironmentVariable("SECRET_KEY");
+        private string baseURL = "https://newsapi.org/v2/";
+        private HttpClient client = new HttpClient();
 
         public static void getTopNews(string key){
             Console.Clear();
@@ -60,8 +75,27 @@ namespace ProjectZero{
             Console.ReadLine();
         }
 
+        public async Task detailedSearch(){
+            
+            this.client.DefaultRequestHeaders.Add("user-agent", "ProjectZero 0.88");//adding headers to client
+            this.client.DefaultRequestHeaders.Add("a-api-key", this.apikey);
 
 
+
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"https://newsapi.org/v2/everything?q=bitcoin&apiKey={this.apikey}");
+            var httpResponse = await this.client.SendAsync(httpRequest);
+
+            var json = await httpResponse.Content?.ReadAsStringAsync();
+
+            var articleList = JsonConvert.DeserializeObject<dynamic>(json)!;
+
+            var list = articleList.articles;
+            
+            Console.WriteLine(list);
+
+
+        }
+        
 
     }
 }
