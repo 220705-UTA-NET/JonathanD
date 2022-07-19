@@ -28,14 +28,13 @@ namespace ProjectZero{
             Console.WriteLine("1. Top 10 Global Headlines.");
             Console.WriteLine("2. Search by keyword.");
             Console.WriteLine("3. Detailed search...");
-            Console.WriteLine("4. Global headlines analytics");
             Console.WriteLine("Press X to exit the program.");
         }//end printMenu
 
         public static Boolean checkChoice(char choice){
             Boolean valid = false;
 
-            char[] options = {'1', '2', '3', '4','X'};
+            char[] options = {'1', '2', '3','X'};
 
             foreach(char element in options){
                 if(choice == element){

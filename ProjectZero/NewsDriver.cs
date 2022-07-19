@@ -4,6 +4,7 @@ using NewsAPI.Constants;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Text;
 using System.Collections;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ namespace ProjectZero{
     class NewsDriver{ 
 
         public NewsDriver(){
-            
+
         }
 
         private string apikey = Environment.GetEnvironmentVariable("SECRET_KEY");
@@ -75,27 +76,85 @@ namespace ProjectZero{
             Console.ReadLine();
         }
 
+//Method to use a queryBuilder to build a query string
         public async Task detailedSearch(){
             
             this.client.DefaultRequestHeaders.Add("user-agent", "ProjectZero 0.88");//adding headers to client
             this.client.DefaultRequestHeaders.Add("a-api-key", this.apikey);
 
+            
+            StringBuilder url = new();
+            url.Append(baseURL + "/everything?");
+            string finalQuery = CustomQuery(url);
 
-
-            var httpRequest = new HttpRequestMessage(HttpMethod.Get, $"https://newsapi.org/v2/everything?q=bitcoin&apiKey={this.apikey}");
+            var httpRequest = new HttpRequestMessage(HttpMethod.Get, finalQuery);
             var httpResponse = await this.client.SendAsync(httpRequest);
 
-            var json = await httpResponse.Content?.ReadAsStringAsync();
+            var json = await httpResponse.Content?.ReadAsStringAsync()!;
 
-            var articleList = JsonConvert.DeserializeObject<dynamic>(json)!;
+            var articleJson = JsonConvert.DeserializeObject<dynamic>(json)!;
 
-            var list = articleList.articles;
-            
-            Console.WriteLine(list);
+            var list = articleJson.articles;
 
 
+            Console.Clear();
+            Console.WriteLine(list.ToString());
+            Console.ReadKey();
         }
-        
+
+//Building a custom query string
+        public string CustomQuery(StringBuilder sb){
+            
+            Boolean done = false;
+            int selection;
+
+            while(!done)
+            {
+                Console.Clear();
+                Console.WriteLine("Please select from the following options");
+                Console.WriteLine("[1] Add keyword (use + and - to denote must and must not).");
+                Console.WriteLine("[2] Add domain (eg: techcrunch.com)");
+                Console.WriteLine("[3] Add 'from date' (Max 1 month, use YYYY-MM-DD format)");
+                Console.WriteLine("[4] Add add language (en=english, es=spanish, etc)");
+                Console.WriteLine("[5] Finish and send.");
+
+                selection = Convert.ToInt32(Console.ReadLine());
+
+                switch(selection)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("Please enter your keyword");
+                        sb.Append("q=" + Console.ReadLine() + "&");
+                        break;
+                    case 2:
+                        Console.Clear(); 
+                        Console.WriteLine("Please enter the domain");
+                        sb.Append("domains=" + Console.ReadLine() + "&");
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("Please enter the date you wish to search from.");
+                        sb.Append("from=" + Console.ReadLine() + "&");
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.WriteLine("Please enter the language");
+                        sb.Append("language=" + Console.ReadLine() + "&");
+                        break;
+                    case 5:
+                        Console.Clear();
+                        done = true;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            sb.Append($"sortBy=relevancy&pageSize=10&apiKey={this.apikey}");
+            return sb.ToString(); //sending final string
+        }
 
     }
 }

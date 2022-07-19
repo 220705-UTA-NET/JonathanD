@@ -29,9 +29,6 @@ namespace ProjectZero{
                     case '3':
                         nd.detailedSearch();
                         break;
-                    case '4':
-
-                        break;
                     case 'X':
                         return;
                     default:
