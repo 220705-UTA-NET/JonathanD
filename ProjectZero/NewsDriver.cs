@@ -14,7 +14,7 @@ namespace ProjectZero{
 
     class NewsDriver{ 
 
-        public NewsDriver(){
+        public NewsDriver(){ //empty constructor
 
         }
 
