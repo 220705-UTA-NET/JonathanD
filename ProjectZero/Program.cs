@@ -30,13 +30,17 @@ namespace ProjectZero{
                         nd.detailedSearch();
                         break;
                     case 'X':
-                        choice = 'X';
-                        break;
+                        return;
                     default:
+                        Console.Clear();
+                        Console.WriteLine("\nPlease enter a valid choice.\nPress enter to continue...");
+                        Console.ReadLine();
                         break;
                 }
 
             }while(choice != 'X');
+
+
 
             return;
 

@@ -10,7 +10,7 @@ namespace ProjectZero{
             return input;
         }//end getInpit
 
-        public static string? getString(string input){ //getting string input from console
+        public static string? getString(string input){
 
             input = Console.ReadLine();
 
@@ -22,7 +22,7 @@ namespace ProjectZero{
             return input;
         }//end getString
 
-        public static void printMenu(){ //printing menu
+        public static void printMenu(){
             Console.WriteLine("\nHello, welcome to your console newsletter.");
             Console.WriteLine("Please select from the following options.");
             Console.WriteLine("1. Top 10 Global Headlines.");
@@ -31,7 +31,7 @@ namespace ProjectZero{
             Console.WriteLine("Press X to exit the program.");
         }//end printMenu
 
-        public static Boolean checkChoice(char choice){ //validating user choice
+        public static Boolean checkChoice(char choice){
             Boolean valid = false;
 
             char[] options = {'1', '2', '3','X'};
