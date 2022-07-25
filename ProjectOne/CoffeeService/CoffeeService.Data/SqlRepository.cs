@@ -1,6 +1,6 @@
 ﻿namespace CoffeeService.Data
 {
-    public class Class1
+    public class SqlRepository : IRepository
     {
 
     }
