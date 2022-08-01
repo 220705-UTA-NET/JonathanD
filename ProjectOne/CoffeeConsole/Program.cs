@@ -30,6 +30,7 @@ namespace CoffeeConsole
                 customerNames.Add(x.userName);
             }
 
+            //Logging in, creating new user if needed
             do{
                 
                 //Console.Clear(); 
@@ -103,14 +104,66 @@ namespace CoffeeConsole
 
             } while(!loggedIn);
 
+            
+            //Main menu loop
+            Console.Clear();
+            uSelection = 0;
+            bool exit = false;
+            do
+            {   
+                Console.Clear();
+                Console.WriteLine($"Welcome {customer.userName}!");
+                Console.WriteLine("Please select from the following options:");
+                Console.WriteLine("[1] New order");
+                Console.WriteLine("[2] View order history");
+                Console.WriteLine("[3] Exit CoffeeService");
+                Console.Write("Enter selection: ");
+                int.TryParse(Console.ReadLine(), out uSelection);
+
+                
+
+                switch(uSelection)
+                {
+                    case 1://create order
+
+                        break;
+                    case 2://view past orders
+                        Console.Clear();
+                        string uri = uriBase + $"Drinks/api/customer/{customer.userName}/orders";
+                        string response = await client.GetStringAsync(uri);
+
+                        List<AppOrder> orders = JsonSerializer.Deserialize<List<AppOrder>>(response);
+                        
+                        if(orders.Count == 0)
+                        {
+                            Console.WriteLine("You haven't placed any orders!");
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            foreach(AppOrder order in orders)
+                            {
+                                Console.WriteLine(order.ToString());
+                            }
+                        }
+                        Console.WriteLine("\nPress any key to continue...");
+                        Console.ReadLine();
+
+                        break;
+                    case 3://exiting case
+                        Console.Clear();
+                        Console.WriteLine("Have a good day!");
+                        Console.ReadLine();
+                        exit = true;
+                        break;
+                    default:
+                        break;
+                }
 
 
+            }while(!exit);
 
-
-
-
-
-
+            return; // exits program
         }
     }
 }
