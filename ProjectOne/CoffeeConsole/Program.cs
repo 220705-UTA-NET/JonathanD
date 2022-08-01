@@ -33,7 +33,7 @@ namespace CoffeeConsole
             //Logging in, creating new user if needed
             do{
                 
-                //Console.Clear(); 
+                Console.Clear(); 
                 Console.WriteLine("Hello, welcome to CoffeeService!");
                 Console.WriteLine("\n\n Are you a new or returning user?");
                 Console.WriteLine("[1] Returning User");
@@ -45,7 +45,7 @@ namespace CoffeeConsole
                 {
                     case 1: //User sellects a returning user
                         Console.Clear();
-                        Console.WriteLine("Please enter your username: ");
+                        Console.Write("Please enter your username: ");
                         userName = Console.ReadLine();
                         
                         foreach(Customer x in customers)

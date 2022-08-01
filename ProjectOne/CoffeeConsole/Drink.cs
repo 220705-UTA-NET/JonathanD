@@ -2,9 +2,9 @@ namespace CoffeeConsole
 {
     public class Drink
     {
-        public int drinkId { get; set; }
-        public string name { get; set; }
-        public string details { get; set; }
+        public int? drinkId { get; set; }
+        public string? name { get; set; }
+        public string? details { get; set; }
         public double price { get; set; }
 
         public Drink() { }
