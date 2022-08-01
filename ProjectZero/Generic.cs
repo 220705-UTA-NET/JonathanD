@@ -12,7 +12,7 @@ namespace ProjectZero{
 
         public static string? getString(string input){
 
-            input = Console.ReadLine();
+            input = Console.ReadLine()!;
 
             if(string.IsNullOrEmpty(input) || string.IsNullOrWhiteSpace(input)){
                 Console.WriteLine("Don't submit empty strings, try again.");

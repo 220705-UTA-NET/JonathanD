@@ -122,7 +122,7 @@ namespace CoffeeService.App.Controllers
         }
 
         [HttpPost("api/addOrder")]
-        public async Task<ActionResult<Order>> PostNewOrder([FromBody] OrderWrapper order)
+        public async Task<ActionResult<OrderWrapper>> PostNewOrder([FromBody] OrderWrapper order)
         {
             try
             {
@@ -137,8 +137,8 @@ namespace CoffeeService.App.Controllers
             return Ok();
         }
 
-        [HttpPost("api/addCustomer")]
-        public async Task<ActionResult<Customer>> PostNewCustomer([FromBody] string customer)
+        [HttpPost("api/addCustomer/{customer}")]
+        public async Task<ActionResult<Customer>> PostNewCustomer([FromRoute] string customer)
         {
             try
             {

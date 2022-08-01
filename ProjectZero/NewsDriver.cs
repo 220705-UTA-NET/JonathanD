@@ -18,7 +18,7 @@ namespace ProjectZero{
 
         }
 
-        private string apikey = Environment.GetEnvironmentVariable("SECRET_KEY");
+        private string apikey = Environment.GetEnvironmentVariable("SECRET_KEY")!;
         private string baseURL = "https://newsapi.org/v2/";
         private HttpClient client = new HttpClient();
 
@@ -50,7 +50,7 @@ namespace ProjectZero{
             Console.WriteLine("Please enter a search term.");
 
             string term = "";
-            term = Generic.getString(term);
+            term = Generic.getString(term)!;
 
             Console.Clear();
 

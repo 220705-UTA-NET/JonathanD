@@ -72,7 +72,7 @@ namespace CoffeeConsole
                     case 2:
                         Console.Clear();
                         Console.WriteLine(uriBase);
-                        Console.WriteLine("Please enter a username: ");
+                        Console.Write("Please enter a username: ");
                         userName = Console.ReadLine();
 
                         if(!customerNames.Contains(userName))
