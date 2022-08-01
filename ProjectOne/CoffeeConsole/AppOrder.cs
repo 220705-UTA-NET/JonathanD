@@ -29,6 +29,8 @@ namespace CoffeeConsole
                 sb.Append($"\n"+ drink.ToString());    
             }
             
+            total = Math.Round(total, 2);
+
             sb.Append($"\nTotal items:{drinks.Count}              Order total:{total}");
 
             return sb.ToString();

@@ -38,6 +38,7 @@ namespace CoffeeConsole
                 Console.WriteLine("\n\n Are you a new or returning user?");
                 Console.WriteLine("[1] Returning User");
                 Console.WriteLine("[2] New User");
+                Console.Write("Please enter selection: ");
                 uSelection = Convert.ToInt32(Console.ReadLine());
 
                 switch(uSelection)
@@ -109,6 +110,8 @@ namespace CoffeeConsole
             Console.Clear();
             uSelection = 0;
             bool exit = false;
+            List<Drink> orderDrinks = new();
+
             do
             {   
                 Console.Clear();
@@ -125,7 +128,105 @@ namespace CoffeeConsole
                 switch(uSelection)
                 {
                     case 1://create order
+                        Console.Clear();
+                        bool doneAdding = false;
+                        //Get list of all drinks
+                        string drinkUri = uriBase + "Drinks/api/drinks";
+                        string drinkResponse = await client.GetStringAsync(drinkUri);
+                        List<Drink> drinkMenu = JsonSerializer.Deserialize<List<Drink>>(drinkResponse);
+                        
+                        do{
 
+                            Console.Clear();
+                            for(int i=0; i < drinkMenu.Count; i++)
+                            {
+                                Console.WriteLine($"[{i+1}] " + drinkMenu[i].ToString());
+                            }
+                            Console.WriteLine("[0] Finish ordering");
+                            Console.Write("Please enter selection: ");
+                            int.TryParse(Console.ReadLine(), out uSelection);
+                            
+                            switch(uSelection)
+                            {
+                                case 1:
+                                    orderDrinks.Add(drinkMenu[0]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 2:
+                                    orderDrinks.Add(drinkMenu[1]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 3:
+                                    orderDrinks.Add(drinkMenu[2]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 4:
+                                    orderDrinks.Add(drinkMenu[3]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 5:
+                                    orderDrinks.Add(drinkMenu[4]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 6:
+                                    orderDrinks.Add(drinkMenu[5]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 7:
+                                    orderDrinks.Add(drinkMenu[6]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 8:
+                                    orderDrinks.Add(drinkMenu[7]);
+                                    Console.WriteLine($"Added {orderDrinks.Last().name}!");
+                                    break;
+                                case 0:
+                                    Console.Clear();
+                                    doneAdding = true;
+                                    Console.WriteLine($"{orderDrinks.Count} added to your order!");
+                                    Console.WriteLine("Press any key to continue...");
+                                    Console.ReadLine();
+                                    break;
+                                default:
+                                    Console.WriteLine("What happened here...");
+                                    Console.ReadLine();
+                                    break;
+                            }
+                            
+                            if(orderDrinks.Count == 0)
+                            {
+                                doneAdding = false;
+                                Console.WriteLine("Can't send a blank order, please try again!");
+                                Console.ReadLine();
+                            }
+                        
+
+                        }while(!doneAdding);
+                        
+
+                        //Making request
+                        bool reqMade = false;
+                        do{ 
+                            //Creating order wrapper and setting fields
+                            OrderWrapper newOrder = new();
+                            newOrder.Customer = customer;
+                            newOrder.Drinks = orderDrinks;
+
+                            var content = new StringContent(JsonSerializer.Serialize(newOrder), Encoding.UTF8, "application/json");
+                            
+                            Uri postOrder = new Uri(uriBase.ToString() + "Drinks/api/addOrder");
+                            //var json = JsonSerializer.Serialize(newOrder);
+                            //Console.WriteLine(json);
+                            await client.PostAsync(postOrder, content);
+
+                            reqMade = true;
+                        }while(!reqMade);
+
+                        Console.WriteLine("Order sent!");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadLine();
+                        //Clearing the list for future orders
+                        orderDrinks.Clear();
                         break;
                     case 2://view past orders
                         Console.Clear();
