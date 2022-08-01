@@ -4,10 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoffeeService.Data
+namespace CoffeeService.Model
 {
-    internal interface IRepository
+    public interface IRepository
     {
+        Task<IEnumerable<Drink>> GetDrinksAsync();
+        Task CreateDrinkAsync(Drink newDrink);
+        Task<IEnumerable<Customer>> GetCustomersAsync();
+        Task<Customer> GetSingleCustAsync(string name);
+        Task<IEnumerable<AppOrder>> GetCustOrders(string name);
+        Task CreateOrderAsync(OrderWrapper order);
+        Task CreateCustomerAsync(string newCustomer);
 
     }
 }

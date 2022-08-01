@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CoffeeService.Model
+{
+    public class Order
+    {
+        public int orderId { get; set; }
+        public int customerId { get; set; }
+
+        public Order() { }
+
+        public Order(int orderId, int customerId)
+        {
+            this.orderId = orderId;
+            this.customerId = customerId;
+        }
+    }
+}

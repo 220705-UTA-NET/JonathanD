@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeService.Model
 {
-    internal class Drink
+    public class Drink
     {
         public int drinkId { get; set; }
         public string name { get; set; }
