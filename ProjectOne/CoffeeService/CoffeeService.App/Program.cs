@@ -2,12 +2,26 @@ using CoffeeService.Model;
 using Microsoft.Extensions.Logging;
 using CoffeeService.Data;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
 string connectionString = builder.Configuration.GetConnectionString("connectionString");
 //string connectionString = await File.ReadAllTextAsync("C:/Revature/220705-UTA-NET/Connectionstrings/220705-SchoolDb.txt");
+
+//Adding CORS, allowing any origin
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("*");
+                      });
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -32,6 +46,8 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
     options.RoutePrefix = string.Empty;
 });
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CoffeeService.Model;
+using Microsoft.AspNetCore.Cors;
+
+
 
 namespace CoffeeService.App.Controllers
 {
+
+    //When enabling CORS we reference it by the string in the Controller. 
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class DrinksController : ControllerBase
@@ -39,6 +45,8 @@ namespace CoffeeService.App.Controllers
                 _logger.LogError(e, e.Message);
                 return StatusCode(500);
             }
+            
+            
 
             return drinks.ToList();
         }
